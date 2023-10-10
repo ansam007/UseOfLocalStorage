@@ -1,65 +1,68 @@
-var headerTitle = document.querySelector("#header-title");
-headerTitle.style.border = '2.7px solid pink';
-headerTitle.style.padding = '2px';
-var header = document.querySelector('#main-header');
-header.style.border = '2.7px solid black';
-var title = document.querySelector('h2');
-//title.innerHTML = '<b> Add Item </b>';
-title.style.fontWeight = 'bold';
-title.style.color =  'green'
+var form = document.getElementById('addForm');
+var itemList = document.getElementById('items');
+var filter = document.getElementById('filter');
 
-// var input = document.querySelector('input');
-// console.log(input);
-// input.value = 'enter text';
+// Form submit event
+form.addEventListener('submit', addItem);
+// Delete event
+itemList.addEventListener('click', removeItem);
+// Filter event
+filter.addEventListener('keyup', filterItems);
 
-// var submit = document.querySelector('input[type="submit"]');
-// submit.value = 'Submit';
+// Add item
+function addItem(e){
+  e.preventDefault();
 
-// var Lastitem = document.querySelector('.list-group-item:last-child');
-// Lastitem.style.backgroundColor = 'yellow';
+  // Get input value
+  var newItem = document.getElementById('item').value;
 
-// var Firstitem = document.querySelector('.list-group-item:first-child');
-// Firstitem.style.backgroundColor = 'orange';
- 
-// var Nthitem = document.querySelector('.list-group-item:nth-child(2)');
-// Nthitem.style.backgroundColor = 'pink';
+  // Create new li element
+  var li = document.createElement('li');
+  // Add class
+  li.className = 'list-group-item';
+  // Add text node with input value
+  li.appendChild(document.createTextNode(newItem));
 
-// var Nthitem = document.querySelector('.list-group-item:nth-child(3)');
-// Nthitem.style.backgroundColor = 'pink';
+  // Create del button element
+  var deleteBtn = document.createElement('button');
 
-// var list = document.querySelectorAll('.list-group-item')
-// console.log(list);
- 
-var odd = document.querySelectorAll('li:nth-child(odd)');
-for(var i=0; i<odd.length; i++){
-    odd[i].style.backgroundColor = '#f4f4f4f4'; 
+  // Add classes to del button
+  deleteBtn.className = 'btn btn-danger btn-sm float-right delete';
+
+  // Append text node
+  deleteBtn.appendChild(document.createTextNode('X'));
+
+  // Append button to li
+  li.appendChild(deleteBtn);
+
+  // Append li to list
+  itemList.appendChild(li);
 }
 
-var even = document.querySelectorAll('li:nth-child(even)');
-for(var i=0; i<even.length; i++){
-    even[i].style.backgroundColor = '#cc'; 
+// Remove item
+function removeItem(e){
+  if(e.target.classList.contains('delete')){
+    if(confirm('Are You Sure?')){
+      var li = e.target.parentElement;
+      itemList.removeChild(li);
+    }
+  }
 }
 
-var listen = document.querySelector('input');
-listen.addEventListener('click', function(){
-    listen.value = '';
-    
-})
-
-var newDiv = document.createElement('div');
-var newDivText = document.createTextNode('Hello World');
-newDiv.appendChild(newDivText);
-
-var container = document.querySelector('header .container');
-var h1 = document.querySelector('header h1');
-container.insertBefore(newDiv, h1);
-
-
-const listItem1 = document.querySelector("#items li:first-child");
-console.log(listItem1);
-
-const helloWorldText2 = document.createTextNode("Hello world ");
-listItem1.parentNode.insertBefore(helloWorldText2, listItem1);
-
-
+// Filter Items
+function filterItems(e){
+  // convert text to lowercase
+  var text = e.target.value.toLowerCase();
+  // Get lis
+  var items = itemList.getElementsByTagName('li');
+  // Convert to an array
+  Array.from(items).forEach(function(item){
+    var itemName = item.firstChild.textContent;
+    if(itemName.toLowerCase().indexOf(text) != -1){
+      item.style.display = 'block';
+    } else {
+      item.style.display = 'none';
+    }
+  });
+}
 

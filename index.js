@@ -76,19 +76,27 @@ function filterItems(e){
   });
 }
 
+// var submit = document.querySelector('#submit');
+// submit.addEventListener("click", function(){
+//   var text = document.querySelector('#item').value;
+//   var text2 = document.querySelector('#item2').value;
+//   if(text2 !== '' && text !== ''){
+//     localStorage.setItem(text, text2);
+//   }else if(text === ''){
+//     localStorage.setItem('please add item', text2);
+//   }else {
+//     localStorage.setItem (text, 'please add description');
+//   }
+
+// });
+
+
 var submit = document.querySelector('#submit');
-submit.addEventListener("click", function(){
-  var text = document.querySelector('#item').value;
-  var text2 = document.querySelector('#item2').value;
-  if(text2 !== '' && text !== ''){
-    localStorage.setItem(text, text2);
-  }else if(text === ''){
-    localStorage.setItem('please add item', text2);
-  }else {
-    localStorage.setItem (text, 'please add description');
-  }
-
+submit.addEventListener("click",  function () {
+ // e.preventDefault();
+  var obj = {
+  text : document.querySelector('#item').value,
+  text2 : document.querySelector('#item2').value,
+}
+localStorage.setItem("userData", JSON.stringify(obj));
 });
-
-
-

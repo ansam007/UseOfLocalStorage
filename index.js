@@ -76,6 +76,19 @@ function filterItems(e){
   });
 }
 
+var submit = document.querySelector('#submit');
+submit.addEventListener("click", function(){
+  var text = document.querySelector('#item').value;
+  var text2 = document.querySelector('#item2').value;
+  if(text2 !== '' && text !== ''){
+    localStorage.setItem(text, text2);
+  }else if(text === ''){
+    localStorage.setItem('please add item', text2);
+  }else {
+    localStorage.setItem (text, 'please add description');
+  }
+
+});
 
 
 
